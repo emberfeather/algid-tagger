@@ -1,14 +1,14 @@
 {
-	'information': {
-		'key': 'tagger',
-		'title': 'Tagger',
-		'i18n': {
-			'locales': 'en_US'
+	"information": {
+		"key": "tagger",
+		"title": "Tagger",
+		"i18n": {
+			"locales": "en_US"
 		},
-		'prerequisites': {
+		"prerequisites": {
 		},
-		'version': '0.1.0'
+		"version": "0.1.0"
 	},
-	'navigation': [
+	"navigation": [
 	]
 }
