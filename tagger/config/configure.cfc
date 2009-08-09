@@ -11,12 +11,12 @@
 			
 			<!--- Tagger schema --->
 			<cfquery datasource="#variables.datasource.name#">
-				CREATE SCHEMA #variables.datasource.prefix#tagger
+				CREATE SCHEMA "#variables.datasource.prefix#tagger"
 					AUTHORIZATION #variables.datasource.owner#;
 			</cfquery>
 			
 			<cfquery datasource="#variables.datasource.name#">
-				COMMENT ON SCHEMA #variables.datasource.prefix#tagger IS 'Tagger Plugin Schema';
+				COMMENT ON SCHEMA "#variables.datasource.prefix#tagger" IS 'Tagger Plugin Schema';
 			</cfquery>
 			
 			<!---
@@ -25,7 +25,7 @@
 			
 			<!--- Tag Sequence --->
 			<cfquery datasource="#variables.datasource.name#">
-				CREATE SEQUENCE #variables.datasource.prefix#tagger."tag_tagID_seq"
+				CREATE SEQUENCE "#variables.datasource.prefix#tagger"."tag_tagID_seq"
 					INCREMENT 1
 					MINVALUE 1
 					MAXVALUE 9223372036854775807
@@ -34,7 +34,7 @@
 			</cfquery>
 			
 			<cfquery datasource="#variables.datasource.name#">
-				ALTER TABLE #variables.datasource.prefix#tagger."tag_tagID_seq" OWNER TO #variables.datasource.owner#;
+				ALTER TABLE "#variables.datasource.prefix#tagger"."tag_tagID_seq" OWNER TO #variables.datasource.owner#;
 			</cfquery>
 			
 			<!---
@@ -43,9 +43,9 @@
 			
 			<!--- Tag Table --->
 			<cfquery datasource="#variables.datasource.name#">
-				CREATE TABLE #variables.datasource.prefix#tagger.tag
+				CREATE TABLE "#variables.datasource.prefix#tagger".tag
 				(
-					"tagID" integer NOT NULL DEFAULT nextval('#variables.datasource.prefix#tagger."tag_tagID_seq"'::regclass),
+					"tagID" integer NOT NULL DEFAULT nextval('"#variables.datasource.prefix#tagger"."tag_tagID_seq"'::regclass),
 					tag character varying(50) NOT NULL,
 					"createdOn" timestamp without time zone NOT NULL DEFAULT now(),
 					CONSTRAINT "tag_PK" PRIMARY KEY ("tagID"),
@@ -55,11 +55,11 @@
 			</cfquery>
 			
 			<cfquery datasource="#variables.datasource.name#">
-				ALTER TABLE #variables.datasource.prefix#tagger.tag OWNER TO #variables.datasource.owner#;
+				ALTER TABLE "#variables.datasource.prefix#tagger".tag OWNER TO #variables.datasource.owner#;
 			</cfquery>
 			
 			<cfquery datasource="#variables.datasource.name#">
-				COMMENT ON TABLE #variables.datasource.prefix#tagger.tag IS 'Tag information.';
+				COMMENT ON TABLE "#variables.datasource.prefix#tagger".tag IS 'Tag information.';
 			</cfquery>
 		</cfif>
 	</cffunction>
