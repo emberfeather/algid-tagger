@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="algid-admin" default="minify" basedir=".">
+<project name="algid-tagger" default="minify" basedir=".">
 	<!-- Include the property files -->
 	<property file="${basedir}/dist/settings/user.properties"/>
 	<property file="${basedir}/dist/settings/project.properties"/>
