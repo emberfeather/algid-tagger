@@ -64,9 +64,11 @@
 			(
 				"tagID" integer NOT NULL DEFAULT nextval('"#variables.datasource.prefix#tagger"."tag_tagID_seq"'::regclass),
 				tag character varying(50) NOT NULL,
+				"isPluginOnly" bit(1) DEFAULT B'0'::"bit",
 				"createdOn" timestamp without time zone NOT NULL DEFAULT now(),
 				CONSTRAINT "tag_PK" PRIMARY KEY ("tagID"),
-				CONSTRAINT tag_tag_u UNIQUE (tag)
+				CONSTRAINT "tag_tag_u" UNIQUE (tag)
+				CONSTRAINT "tag_tag_plugin_u" UNIQUE (tag, "isPluginOnly")
 			)
 			WITH (OIDS=FALSE);
 		</cfquery>
