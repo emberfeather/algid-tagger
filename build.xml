@@ -8,8 +8,8 @@
 		<echo message="Starting: CSS and JS minification"/>
 		
 		<!-- Use the jar to minify the css and js files -->
-		<apply executable="java" parallel="false" dest="${basedir}/${project.name}/script">
-			<fileset dir="${basedir}/${project.name}/script" includes="**/*.js" excludes="**/*-min.js" />
+		<apply executable="java" parallel="false" dest="${basedir}/${project.key}">
+			<fileset dir="${basedir}/${project.key}" includes="**/*.js" excludes="**/*-min.js" />
 			<arg line="-jar"/>
 			<arg path="${build.lib}/yuicompressor-2.4.2/yuicompressor.jar" />
 			<arg line="-v"/>
@@ -19,8 +19,8 @@
 			<targetfile/>
 		</apply>
 		
-		<apply executable="java" parallel="false" dest="${basedir}/${project.name}/style">
-			<fileset dir="${basedir}/${project.name}/style" includes="**/*.css" excludes="**/*-min.css" />
+		<apply executable="java" parallel="false" dest="${basedir}/${project.key}">
+			<fileset dir="${basedir}/${project.key}" includes="**/*.css" excludes="**/*-min.css" />
 			<arg line="-jar"/>
 			<arg path="${basedir}/${build.lib}/yuicompressor-2.4.2/yuicompressor.jar" />
 			<arg line="-v"/>
@@ -83,14 +83,14 @@
 		
 		<!-- Export the files to a temporary location -->
 		<svn username="${svn.username}" password="${svn.password}" javahl="${svn.javahl}" svnkit="${svn.svnkit}">
-			<export srcPath="${basedir}/${project.name}" destpath="${build.export}/${project.name}" />
+			<export srcPath="${basedir}/${project.key}" destpath="${build.export}/${project.key}" />
 		</svn>
 		
 		<!-- Create a zip of the temporary files -->
-		<zip destfile="${build.files.source}" basedir="${build.export}/${project.name}" update="true" />
+		<zip destfile="${build.files.source}" basedir="${build.export}/${project.key}" update="true" />
 		
 		<!-- Remove the temporary location -->
-		<delete dir="${build.export}/${project.name}" />
+		<delete dir="${build.export}/${project.key}" />
 		
 		<!-- Upload the source files -->
 		<gcupload
@@ -98,23 +98,32 @@
 			password="${svn.password}"
 			projectname="${project.name}"
 			filename="${build.files.source}"
-			targetfilename="${project.name}-${project.version}.zip"
+			targetfilename="${project.key}-${project.version}.zip"
 			summary="${project.fullname} - version ${project.version}"
 			labels="Featured, Type-Source, OpSys-All" />
 		
 		<!-- Remove the zip of the temporary files -->
 		<delete file="${build.files.source}" />
 		
-		<!-- Update the version tracking number -->
-		<echo append="false" file="${build.files.version}" message="${project.version}" />
+		<!-- Update the release note page from the release notes -->
+		<loadfile srcfile="${build.files.releaseNotes}" property="build.releaseNotes" failonerror="true" />
+		
+		<!-- Place the release notes into the main release note page -->
+		<replace file="${build.wiki.releaseNotes}" token="::latest::" value="::latest::${line.separator}${line.separator}== v${project.version} ==${line.separator}${line.separator}Released: ${build.date} UTC${line.separator}${line.separator}${build.releaseNotes}" />
 		
 		<!-- Create a new tag from the trunk -->
 		<svn username="${svn.username}" password="${svn.password}" javahl="${svn.javahl}" svnkit="${svn.svnkit}">
 			<copy srcPath="${basedir}" destURL="${svn.privurl}/tags/${project.version}" message="Tagging release version: ${project.version}" />
 		</svn>
 		
+		<!-- Update the version tracking number -->
+		<echo append="false" file="${build.files.version}" message="${project.version}" />
+		
+		<!-- Reset the release notes for the next version -->
+		<echo append="false" file="${build.files.releaseNotes}" message="" />
+		
 		<echo message="Finished: Release of version ${project.version} complete"/>
-		<echo message="Remember to increment the version for next release"/>
+		<echo message="Remember to increment the version for next release, run the template target, and commit changes to the trunk and wiki"/>
 	</target>
 	
 	<target name="statSVN" depends="svnLog" description="Generates statistics from the repository">

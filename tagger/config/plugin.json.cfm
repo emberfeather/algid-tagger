@@ -9,5 +9,5 @@
 	"prerequisites": {
 		"algid": "0.1.000"
 	},
-	"version": "0.1.000"
+	"version": "0.1.001"
 }
