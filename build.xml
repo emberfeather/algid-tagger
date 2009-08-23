@@ -75,7 +75,7 @@
 	</target>
 	
 	<!-- TODO Add in the Unit Testing as a prereq -->
-	<target name="release" depends="prepareSVN,minify,testVarScoper" description="Tags a release and uploads a new version of the setup zip">
+	<target name="release" depends="prepareSVN,minify,testVarScoper,template" description="Tags a release and uploads a new version of the setup zip">
 		<echo message="Starting: Release of version ${project.version}"/>
 		
 		<!-- Load ANT tasks -->
@@ -189,6 +189,24 @@
 		</svn>
 		
 		<echo message="Finished: SVN Update"/>
+	</target>
+	
+	<target name="template" depends="prepare" description="Uses the templates to update files with dynamic information">
+		<echo message="Starting: Template"/>
+		
+		<!-- Define the filter set for the template -->
+		<filterset id="templateFilterset">
+			<filtersfile file="${build.dist}/settings/user.properties" />
+			<filtersfile file="${build.dist}/settings/project.properties" />
+		</filterset>
+		
+		<!-- Copy the plugin config file -->
+		<copy tofile="${basedir}/${project.key}/config/plugin.json.cfm" overwrite="true">
+			<fileset file="${build.templates}/config/plugin.json.cfm"/>
+			<filterset refid="templateFilterset"/>
+		</copy>
+		
+		<echo message="Finished: Template"/>
 	</target>
 	
 	<target name="testMXUnit" depends="prepare" description="Runs the Unit Tests">
