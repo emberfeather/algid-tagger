@@ -67,8 +67,8 @@
 				"isPluginOnly" boolean NOT NULL DEFAULT false,
 				"createdOn" timestamp without time zone NOT NULL DEFAULT now(),
 				CONSTRAINT "tag_PK" PRIMARY KEY ("tagID"),
-				CONSTRAINT "tag_tag_u" UNIQUE (tag)
-				CONSTRAINT "tag_tag_plugin_u" UNIQUE (tag, "isPluginOnly")
+				CONSTRAINT "tag_tag_U" UNIQUE (tag),
+				CONSTRAINT "tag_tag_plugin_U" UNIQUE (tag, "isPluginOnly")
 			)
 			WITH (OIDS=FALSE);
 		</cfquery>
