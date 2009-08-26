@@ -1,4 +1,9 @@
 {
+	"applicationManagers": {
+		"transient": {
+			"modTagForTagger": "plugins.tagger.inc.model.modTag"
+		}
+	},
 	"i18n": {
 		"locales": [
 			"en_PI",
