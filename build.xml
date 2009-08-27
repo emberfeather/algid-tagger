@@ -74,8 +74,7 @@
 		<echo message="Finished: SVN Preparation"/>
 	</target>
 	
-	<!-- TODO Add in the Unit Testing as a prereq -->
-	<target name="release" depends="prepareSVN,minify,testVarScoper,template" description="Tags a release and uploads a new version of the setup zip">
+	<target name="release" depends="prepareSVN,minify,testVarScoper,testMXUnit" description="Tags a release and uploads a new version of the setup zip">
 		<echo message="Starting: Release of version ${project.version}"/>
 		
 		<!-- Load ANT tasks -->
