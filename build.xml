@@ -223,7 +223,7 @@
 		<!-- Load ANT tasks -->
 		<taskdef name="mxunittask" classname="org.mxunit.ant.MXUnitAntTask" classpath="${basedir}/mxunit/ant/lib/mxunit-ant-java5.jar" />
 		
-		<mxunittask server="${test.host}" port="${test.port}" outputdir="${basedir}${build.dist}/unit" defaultrunner="${test.mxunit.defaultrunner}" verbose="${general.verbose}" haltonerror="true">
+		<mxunittask server="${test.host}" port="${test.port}" outputdir="${build.dist}/unit" defaultrunner="${test.mxunit.defaultrunner}" verbose="${general.verbose}" haltonerror="true">
 			<directory path="${basedir}/test" componentPath="${test.mxunit.componentpath}" recurse="true" />
 		</mxunittask>
 		
