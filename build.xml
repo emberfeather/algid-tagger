@@ -223,9 +223,11 @@
 		<!-- Load ANT tasks -->
 		<taskdef name="mxunittask" classname="org.mxunit.ant.MXUnitAntTask" classpath="${basedir}/mxunit/ant/lib/mxunit-ant-java5.jar" />
 		
-		<mxunittask server="${test.host}" port="${test.port}" outputdir="${build.dist}/unit" defaultrunner="${test.mxunit.defaultrunner}" verbose="${general.verbose}">
+		<mxunittask server="${test.host}" port="${test.port}" outputdir="${build.dist}/unit" defaultrunner="${test.mxunit.defaultrunner}" failureproperty="test.mxunit.failure" verbose="${general.verbose}">
 			<directory path="${basedir}/test" componentPath="${test.mxunit.componentpath}" recurse="true" />
 		</mxunittask>
+		
+		<fail if="test.mxunit.failure" message="Unit tests failed" />
 		
 		<echo message="Finished: Unit Tests"/>
 	</target>
