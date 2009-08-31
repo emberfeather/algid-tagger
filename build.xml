@@ -128,9 +128,6 @@
 	<target name="statSVN" depends="svnLog" description="Generates statistics from the repository">
 		<echo message="Starting: SVN Statistics"/>
 		
-		<!-- Load ANT tasks -->
-		<taskdef name="statsvn" classname="net.sf.statsvn.ant.StatSvnTask" classpath="${build.lib}/statSVN-0.5.0/statsvn.jar" />
-		
 		<java jar="${build.lib}/statSVN-0.5.0/statsvn.jar" fork="true" failonerror="true">
 			<arg value="-title" />
 			<arg value="${project.fullname}" />
