@@ -129,8 +129,16 @@
 			<entry key="project.version.build" value="1" operation="+" type="int"/>
 		</propertyfile>
 		
+		<!-- Call the template target -->
+		<antcall target="template"/>
+		
+		<!-- Commit changes -->
+		<svn username="${svn.username}" password="${svn.password}" javahl="${svn.javahl}" svnkit="${svn.svnkit}">
+			<commit dir="${basedir}" recurse="true" message="Release changes from version: ${project.version}"/>
+			<commit dir="${build.wiki.path}" recurse="true" message="Wiki changes from version: ${project.version}"/>
+		</svn>
+		
 		<echo message="Finished: Release of version ${project.version} complete"/>
-		<echo message="Remember to run the template target and commit changes to the trunk and wiki"/>
 	</target>
 	
 	<target name="statSVN" depends="svnLog" description="Generates statistics from the repository">
