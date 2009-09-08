@@ -25,7 +25,7 @@
 		<apply executable="java" parallel="false" dest="${basedir}/${project.key}">
 			<fileset dir="${basedir}/${project.key}" includes="**/*.css" excludes="**/*-min.css" />
 			<arg line="-jar"/>
-			<arg path="${basedir}/${build.lib}/yuicompressor-2.4.2/yuicompressor.jar" />
+			<arg path="${build.lib}/yuicompressor-2.4.2/yuicompressor.jar" />
 			<arg line="-v"/>
 			<srcfile/>
 			<arg line="-o"/>
