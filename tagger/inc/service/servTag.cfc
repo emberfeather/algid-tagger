@@ -54,7 +54,7 @@
 			WHERE "tagID" = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.tagID#" />
 		</cfquery>
 		
-		<cfset tag = application.managers.transient.getModTagForTagger(variables.i18n, variables.locale) />
+		<cfset tag = application.factories.transient.getModTagForTagger(variables.i18n, variables.locale) />
 		
 		<cfset tag.deserialize(results) />
 		
