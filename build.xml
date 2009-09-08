@@ -80,7 +80,7 @@
 		<echo message="Finished: SVN Preparation"/>
 	</target>
 	
-	<target name="release" depends="prepareSVN,minify,testVarScoper,testMXUnit" description="Tags a release and uploads a new version of the setup zip">
+	<target name="release" depends="prepareSVN,svnUpdate,minify,testVarScoper,testMXUnit" description="Tags a release and uploads a new version of the setup zip">
 		<echo message="Starting: Release of version ${project.version}"/>
 		
 		<!-- Load ANT tasks -->
@@ -121,9 +121,6 @@
 			<copy srcPath="${basedir}" destURL="${svn.privurl}/tags/${project.version}" message="Tagging release version: ${project.version}" />
 		</svn>
 		
-		<!-- Update the version tracking file -->
-		<echo append="false" file="${build.release.version.txt}" message="${project.version}" />
-		
 		<!-- Reset the release notes for the next version -->
 		<echo append="false" file="${build.release.notes.txt}" message="  * " />
 		
@@ -132,8 +129,8 @@
 			<entry key="project.version.build" value="1" operation="+" type="int"/>
 		</propertyfile>
 		
-		<!-- Call the template target -->
-		<antcall target="template"/>
+		<!-- Call the release template target -->
+		<antcall target="releaseTemplate"/>
 		
 		<!-- Commit changes -->
 		<svn username="${svn.username}" password="${svn.password}" javahl="${svn.javahl}" svnkit="${svn.svnkit}">
@@ -142,6 +139,25 @@
 		</svn>
 		
 		<echo message="Finished: Release of version ${project.version} complete"/>
+	</target>
+	
+	<target name="releaseTemplate" depends="template">
+		<echo message="Starting: Release Template"/>
+		
+		<!-- Copy the version file -->
+		<copy tofile="${basedir}/version.json" overwrite="true">
+			<fileset file="${build.templates}/version.json"/>
+			<filterset>
+				<filterset>
+					<filter token="project.releaseNotes" value="${project.wiki}/ReleaseNotes"/>
+					<filter token="project.releaseURL" value="${project.files}/${project.key}-${project.version}.zip"/>
+					<filter token="project.url" value="${project.files}/${project.key}-${project.version}.zip"/>
+					<filter token="project.version" value="${project.version}"/>
+				</filterset>
+			</filterset>
+		</copy>
+		
+		<echo message="Finished: Release Template"/>
 	</target>
 	
 	<target name="statSVN" depends="svnLog" description="Generates statistics from the repository">
@@ -221,8 +237,8 @@
 		<!-- Define the filter set for the template -->
 		<filterset id="templateFilterset">
 			<filtersfile file="${build.dist}/settings/user.properties" />
-			<filtersfile file="${build.dist}/settings/version.properties" />
 			<filtersfile file="${build.dist}/settings/project.properties" />
+			<filtersfile file="${build.dist}/settings/version.properties" />
 		</filterset>
 		
 		<!-- Copy the plugin config file -->
