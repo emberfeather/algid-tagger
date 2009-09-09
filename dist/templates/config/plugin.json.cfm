@@ -1,8 +1,8 @@
 {
-	"applicationManagers": {
-		"transient": {
-			"modTagForTagger": "plugins.tagger.inc.model.modTag"
-		}
+	"applicationSingletons": {
+	},
+	"applicationTransients": {
+		"modTagForTagger": "plugins.tagger.inc.model.modTag"
 	},
 	"i18n": {
 		"locales": [
@@ -13,6 +13,10 @@
 	"key": "@project.key@",
 	"prerequisites": {
 		"algid": "@prerequisites.algid@"
+	},
+	"sessionSingletons": {
+	},
+	"sessionTransients": {
 	},
 	"version": "@project.version.major@.@project.version.minor@.@project.version.build@"
 }
