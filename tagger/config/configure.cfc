@@ -3,12 +3,14 @@
 		<cfargument name="plugin" type="struct" required="true" />
 		<cfargument name="installedVersion" type="string" default="" />
 		
-		<!--- fresh => 0.1.000 --->
-		<cfif arguments.installedVersion EQ ''>
+		<cfset var versions = createObject('component', 'algid.inc.resource.utility.version').init() />
+		
+		<!--- fresh => 0.1.0 --->
+		<cfif versions.compareVersions(arguments.installedVersion, '0.1.0') LT 0>
 			<!--- Setup the Database --->
 			<cfswitch expression="#variables.datasource.type#">
 				<cfcase value="PostgreSQL">
-					<cfset postgreSQL0_1_000() />
+					<cfset postgreSQL0_1_0() />
 				</cfcase>
 				<cfdefaultcase>
 					<!--- TODO Remove this thow when a later version supports more database types  --->
@@ -19,9 +21,9 @@
 	</cffunction>
 	
 	<!---
-		Configures the database for v0.1.000
+		Configures the database for v0.1.0
 	--->
-	<cffunction name="postgreSQL0_1_000" access="public" returntype="void" output="false">
+	<cffunction name="postgreSQL0_1_0" access="public" returntype="void" output="false">
 		<!---
 			SCHEMA
 		--->
