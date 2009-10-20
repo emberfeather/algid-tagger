@@ -45,8 +45,11 @@
 	<cffunction name="readTag" access="public" returntype="component" output="false">
 		<cfargument name="tagID" type="numeric" required="true" />
 		
+		<cfset var i18n = '' />
 		<cfset var results = '' />
 		<cfset var tag = '' />
+		
+		<cfset i18n = variables.transport.applicationSingletons.getI18N() />
 		
 		<cfquery name="results" datasource="#variables.datasource.name#">
 			SELECT "tagID", tag, "createdOn", "isPluginOnly"
@@ -54,7 +57,7 @@
 			WHERE "tagID" = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.tagID#" />
 		</cfquery>
 		
-		<cfset tag = application.factories.transient.getModTagForTagger(variables.i18n, variables.locale) />
+		<cfset tag = application.factories.transient.getModTagForTagger(i18n, variables.transport.locale) />
 		
 		<cfset tag.deserialize(results) />
 		
