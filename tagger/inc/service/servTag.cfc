@@ -1,9 +1,16 @@
 <cfcomponent extends="algid.inc.resource.base.service" output="false">
 	<cffunction name="createTag" access="public" returntype="void" output="false">
+		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="tag" type="component" required="true" />
 		
+		<cfset var eventLog = '' />
 		<cfset var filter = '' />
 		<cfset var results = '' />
+		
+		<!--- Get the event log from the transport --->
+		<cfset eventLog = variables.transport.applicationSingletons.getEventLog() />
+		
+		<!--- TODO Check Permissions --->
 		
 		<!--- Check if it already exists --->
 		<cfset filter = {
@@ -39,6 +46,9 @@
 			</cfquery>
 			
 			<cfset arguments.tag.setTagID( results.tagID ) />
+			
+			<!--- Log the create event --->
+			<cfset eventLog.logEvent('tagger', 'createTag', 'Created the ''' & arguments.tag.getTag() & ''' tag.', arguments.currUser.getUserID()) />
 		</cfif>
 	</cffunction>
 	
