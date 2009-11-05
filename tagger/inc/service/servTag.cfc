@@ -8,7 +8,7 @@
 		<cfset var results = '' />
 		
 		<!--- Get the event log from the transport --->
-		<cfset eventLog = variables.transport.applicationSingletons.getEventLog() />
+		<cfset eventLog = variables.transport.theApplication.managers.singleton.getEventLog() />
 		
 		<!--- TODO Check Permissions --->
 		
@@ -59,7 +59,7 @@
 		<cfset var results = '' />
 		<cfset var tag = '' />
 		
-		<cfset i18n = variables.transport.applicationSingletons.getI18N() />
+		<cfset i18n = variables.transport.theApplication.managers.singleton.getI18N() />
 		
 		<cfquery name="results" datasource="#variables.datasource.name#">
 			SELECT "tagID", tag, "createdOn", "isPluginOnly"
