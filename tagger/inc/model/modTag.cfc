@@ -3,47 +3,37 @@
 		<cfargument name="i18n" type="component" required="true" />
 		<cfargument name="locale" type="string" default="en_US" />
 		
-		<cfset var attr = '' />
-		
 		<cfset super.init(arguments.i18n, arguments.locale) />
 		
 		<!--- Tag ID --->
-		<cfset attr = {
+		<cfset addAttribute(
 				attribute = 'tagID',
 				validation = {
 				}
-			} />
-		
-		<cfset addAttribute(argumentCollection = attr) />
+			) />
 		
 		<!--- createdOn --->
-		<cfset attr = {
+		<cfset addAttribute(
 				attribute = 'createdOn',
 				validation = {
 				}
-			} />
-		
-		<cfset addAttribute(argumentCollection = attr) />
+			) />
 		
 		<!--- isPluginOnly --->
-		<cfset attr = {
+		<cfset addAttribute(
 				attribute = 'isPluginOnly',
 				validation = {
 				}
-			} />
-		
-		<cfset addAttribute(argumentCollection = attr) />
+			) />
 		
 		<!--- Tag --->
-		<cfset attr = {
+		<cfset addAttribute(
 				attribute = 'tag',
 				validation = {
 					minLength = 1,
 					maxLength = 50
 				}
-			} />
-		
-		<cfset addAttribute(argumentCollection = attr) />
+			) />
 		
 		<!--- Set the bundle information for translation --->
 		<cfset setI18NBundle('plugins/tagger/i18n/inc/model', 'modTag') />
