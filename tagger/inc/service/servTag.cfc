@@ -48,7 +48,7 @@
 			<cfset arguments.tag.setTagID( results.tagID ) />
 			
 			<!--- Log the create event --->
-			<cfset eventLog.logEvent('tagger', 'createTag', 'Created the ''' & arguments.tag.getTag() & ''' tag.', arguments.currUser.getUserID()) />
+			<cfset eventLog.logEvent('tagger', 'createTag', 'Created the ''' & arguments.tag.getTag() & ''' tag.', arguments.currUser.getUserID(), arguments.tag.getTagID()) />
 		</cfif>
 	</cffunction>
 	
