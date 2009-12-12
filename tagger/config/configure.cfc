@@ -6,7 +6,7 @@
 		<cfset var versions = createObject('component', 'algid.inc.resource.utility.version').init() />
 		
 		<!--- fresh => 0.1.0 --->
-		<cfif versions.compareVersions(arguments.installedVersion, '0.1.0') LT 0>
+		<cfif versions.compareVersions(arguments.installedVersion, '0.1.0') lt 0>
 			<!--- Setup the Database --->
 			<cfswitch expression="#variables.datasource.type#">
 				<cfcase value="PostgreSQL">
@@ -31,7 +31,7 @@
 		<!--- Tagger schema --->
 		<cfquery datasource="#variables.datasource.name#">
 			CREATE SCHEMA "#variables.datasource.prefix#tagger"
-				AUTHORIZATION #variables.datasource.owner#;
+				AUTHorIZATION #variables.datasource.owner#;
 		</cfquery>
 		
 		<cfquery datasource="#variables.datasource.name#">
@@ -39,12 +39,12 @@
 		</cfquery>
 		
 		<!---
-			SEQUENCES
+			SeqUENCES
 		--->
 		
 		<!--- Tag Sequence --->
 		<cfquery datasource="#variables.datasource.name#">
-			CREATE SEQUENCE "#variables.datasource.prefix#tagger"."tag_tagID_seq"
+			CREATE SeqUENCE "#variables.datasource.prefix#tagger"."tag_tagID_seq"
 				INCREMENT 1
 				MINVALUE 1
 				MAXVALUE 9223372036854775807
@@ -53,7 +53,7 @@
 		</cfquery>
 		
 		<cfquery datasource="#variables.datasource.name#">
-			ALTER TABLE "#variables.datasource.prefix#tagger"."tag_tagID_seq" OWNER TO #variables.datasource.owner#;
+			AlteR TABLE "#variables.datasource.prefix#tagger"."tag_tagID_seq" OWNER TO #variables.datasource.owner#;
 		</cfquery>
 		
 		<!---
@@ -64,10 +64,10 @@
 		<cfquery datasource="#variables.datasource.name#">
 			CREATE TABLE "#variables.datasource.prefix#tagger".tag
 			(
-				"tagID" integer NOT NULL DEFAULT nextval('"#variables.datasource.prefix#tagger"."tag_tagID_seq"'::regclass),
-				tag character varying(50) NOT NULL,
-				"isPluginOnly" boolean NOT NULL DEFAULT false,
-				"createdOn" timestamp without time zone NOT NULL DEFAULT now(),
+				"tagID" integer not NULL DEFAUlt nextval('"#variables.datasource.prefix#tagger"."tag_tagID_seq"'::regclass),
+				tag character varying(50) not NULL,
+				"isPluginOnly" boolean not NULL DEFAUlt false,
+				"createdOn" timestamp without time zone not NULL DEFAUlt now(),
 				CONSTRAINT "tag_PK" PRIMARY KEY ("tagID"),
 				CONSTRAINT "tag_tag_U" UNIQUE (tag),
 				CONSTRAINT "tag_tag_plugin_U" UNIQUE (tag, "isPluginOnly")
@@ -76,7 +76,7 @@
 		</cfquery>
 		
 		<cfquery datasource="#variables.datasource.name#">
-			ALTER TABLE "#variables.datasource.prefix#tagger".tag OWNER TO #variables.datasource.owner#;
+			AlteR TABLE "#variables.datasource.prefix#tagger".tag OWNER TO #variables.datasource.owner#;
 		</cfquery>
 		
 		<cfquery datasource="#variables.datasource.name#">

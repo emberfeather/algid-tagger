@@ -42,7 +42,7 @@
 				SELECT "tagID"
 				FROM "#variables.datasource.prefix#tagger"."tag"
 				WHERE tag = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tag.getTag()#" />,
-					AND "isPluginOnly" = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.tag.getIsPluginOnly()#" />
+					and "isPluginOnly" = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.tag.getIsPluginOnly()#" />
 			</cfquery>
 			
 			<cfset arguments.tag.setTagID( results.tagID ) />
@@ -85,18 +85,18 @@
 			WHERE 1=1
 			
 			<cfif structKeyExists(arguments.filter, 'tag')>
-				AND "tag" = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.filter.tag#" />
+				and "tag" = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.filter.tag#" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.filter, 'filter')>
-				AND "tag" LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.filter.filter#%" />
+				and "tag" LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.filter.filter#%" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.filter, 'isPluginOnly')>
-				AND "isPluginOnly" = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.filter.isPluginOnly#" />
+				and "isPluginOnly" = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.filter.isPluginOnly#" />
 			</cfif>
 			
-			ORDER BY tag ASC
+			orDER BY tag ASC
 		</cfquery>
 		
 		<cfreturn results />
