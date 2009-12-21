@@ -96,7 +96,7 @@
 				and "isPluginOnly" = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.filter.isPluginOnly#" />
 			</cfif>
 			
-			orDER BY tag ASC
+			ORDER BY tag ASC
 		</cfquery>
 		
 		<cfreturn results />
