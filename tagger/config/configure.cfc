@@ -39,24 +39,6 @@
 		</cfquery>
 		
 		<!---
-			SeqUENCES
-		--->
-		
-		<!--- Tag Sequence --->
-		<cfquery datasource="#variables.datasource.name#">
-			CREATE SeqUENCE "#variables.datasource.prefix#tagger"."tag_tagID_seq"
-				INCREMENT 1
-				MINVALUE 1
-				MAXVALUE 9223372036854775807
-				START 1
-				CACHE 1;
-		</cfquery>
-		
-		<cfquery datasource="#variables.datasource.name#">
-			AlteR TABLE "#variables.datasource.prefix#tagger"."tag_tagID_seq" OWNER TO #variables.datasource.owner#;
-		</cfquery>
-		
-		<!---
 			TABLES
 		--->
 		
@@ -64,7 +46,7 @@
 		<cfquery datasource="#variables.datasource.name#">
 			CREATE TABLE "#variables.datasource.prefix#tagger".tag
 			(
-				"tagID" integer not NULL DEFAUlt nextval('"#variables.datasource.prefix#tagger"."tag_tagID_seq"'::regclass),
+				"tagID" uuid NOT NULL,
 				tag character varying(50) not NULL,
 				"isPluginOnly" boolean not NULL DEFAUlt false,
 				"createdOn" timestamp without time zone not NULL DEFAUlt now(),
@@ -76,7 +58,7 @@
 		</cfquery>
 		
 		<cfquery datasource="#variables.datasource.name#">
-			AlteR TABLE "#variables.datasource.prefix#tagger".tag OWNER TO #variables.datasource.owner#;
+			ALTER TABLE "#variables.datasource.prefix#tagger".tag OWNER TO #variables.datasource.owner#;
 		</cfquery>
 		
 		<cfquery datasource="#variables.datasource.name#">

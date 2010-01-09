@@ -5,6 +5,7 @@
 		
 		<cfset var eventLog = '' />
 		<cfset var filter = '' />
+		<cfset var objectSerial = '' />
 		<cfset var results = '' />
 		
 		<!--- Get the event log from the transport --->
@@ -22,30 +23,29 @@
 		
 		<cfif results.recordCount>
 			<!--- If it already exists update the object --->
-			<cfset arguments.tag.deserialize(results) />
+			<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />
+			
+			<cfset objectSerial.deserialize(results, arguments.tag) />
 		<cfelse>
 			<!--- Does not exist, create it --->
-			<cfquery datasource="#variables.datasource.name#" result="results">
-				INSERT INTO "#variables.datasource.prefix#tagger"."tag"
-				(
-					tag, 
-					"isPluginOnly"
-				) VALUES (
-					<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tag.getTag()#" />,
-					<cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.tag.getIsPluginOnly()#" />
-				)
-			</cfquery>
 			
-			<!--- Query the tagID --->
-			<!--- TODO replace this with the new id from the insert results --->
-			<cfquery name="results" datasource="#variables.datasource.name#">
-				SELECT "tagID"
-				FROM "#variables.datasource.prefix#tagger"."tag"
-				WHERE tag = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tag.getTag()#" />,
-					and "isPluginOnly" = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.tag.getIsPluginOnly()#" />
-			</cfquery>
+			<!--- Create the new ID --->
+			<cfset arguments.tag.setTagID( createUUID() ) />
 			
-			<cfset arguments.tag.setTagID( results.tagID ) />
+			<cftransaction>
+				<cfquery datasource="#variables.datasource.name#" result="results">
+					INSERT INTO "#variables.datasource.prefix#tagger"."tag"
+					(
+						"tagID",
+						"tag", 
+						"isPluginOnly"
+					) VALUES (
+						<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tag.getTagID()#" />::uuid,
+						<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tag.getTag()#" />,
+						<cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.tag.getIsPluginOnly()#" />
+					)
+				</cfquery>
+			</cftransaction>
 			
 			<!--- Log the create event --->
 			<cfset eventLog.logEvent('tagger', 'createTag', 'Created the ''' & arguments.tag.getTag() & ''' tag.', arguments.currUser.getUserID(), arguments.tag.getTagID()) />
@@ -53,9 +53,10 @@
 	</cffunction>
 	
 	<cffunction name="readTag" access="public" returntype="component" output="false">
-		<cfargument name="tagID" type="numeric" required="true" />
+		<cfargument name="tagID" type="string" required="true" />
 		
 		<cfset var i18n = '' />
+		<cfset var objectSerial = '' />
 		<cfset var results = '' />
 		<cfset var tag = '' />
 		
@@ -64,12 +65,16 @@
 		<cfquery name="results" datasource="#variables.datasource.name#">
 			SELECT "tagID", tag, "createdOn", "isPluginOnly"
 			FROM "#variables.datasource.prefix#tagger"."tag"
-			WHERE "tagID" = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.tagID#" />
+			WHERE "tagID" = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tagID#" />::uuid
 		</cfquery>
 		
 		<cfset tag = variables.transport.theApplication.factories.transient.getModTagForTagger(i18n, variables.transport.theSession.managers.singleton.getSession().getLocale()) />
 		
-		<cfset tag.deserialize(results) />
+		<cfif results.recordCount>
+			<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />
+			
+			<cfset objectSerial.deserialize(results, tag) />
+		</cfif>
 		
 		<cfreturn tag />
 	</cffunction>
