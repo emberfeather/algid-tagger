@@ -65,7 +65,7 @@
 		<cfquery name="results" datasource="#variables.datasource.name#">
 			SELECT "tagID", tag, "createdOn", "isPluginOnly"
 			FROM "#variables.datasource.prefix#tagger"."tag"
-			WHERE "tagID" = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tagID#" />::uuid
+			WHERE "tagID" = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tagID#" null="#arguments.tagID eq ''#" />::uuid
 		</cfquery>
 		
 		<cfset tag = variables.transport.theApplication.factories.transient.getModTagForTagger(i18n, variables.transport.theSession.managers.singleton.getSession().getLocale()) />
