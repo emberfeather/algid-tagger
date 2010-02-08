@@ -31,7 +31,7 @@
 		<!--- Tagger schema --->
 		<cfquery datasource="#variables.datasource.name#">
 			CREATE SCHEMA "#variables.datasource.prefix#tagger"
-				AUTHorIZATION #variables.datasource.owner#;
+				AUTHORIZATION #variables.datasource.owner#;
 		</cfquery>
 		
 		<cfquery datasource="#variables.datasource.name#">
@@ -48,8 +48,8 @@
 			(
 				"tagID" uuid NOT NULL,
 				tag character varying(50) not NULL,
-				"isPluginOnly" boolean not NULL DEFAUlt false,
-				"createdOn" timestamp without time zone not NULL DEFAUlt now(),
+				"isPluginOnly" boolean not NULL DEFAULT false,
+				"createdOn" timestamp without time zone not NULL DEFAULT now(),
 				CONSTRAINT "tag_PK" PRIMARY KEY ("tagID"),
 				CONSTRAINT "tag_tag_U" UNIQUE (tag),
 				CONSTRAINT "tag_tag_plugin_U" UNIQUE (tag, "isPluginOnly")
