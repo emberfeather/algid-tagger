@@ -1,3 +1,6 @@
 .project
+build/logs/
+build/settings/user.properties
+dist/
 tagger/config/settings.json.cfm
 tagger/config/version.json.cfm
