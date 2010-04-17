@@ -1,5 +1,5 @@
 <cfcomponent extends="algid.inc.resource.base.service" output="false">
-	<cffunction name="readTag" access="public" returntype="component" output="false">
+	<cffunction name="getTag" access="public" returntype="component" output="false">
 		<cfargument name="tagID" type="string" required="true" />
 		
 		<cfset var i18n = '' />
@@ -26,7 +26,7 @@
 		<cfreturn tag />
 	</cffunction>
 	
-	<cffunction name="readTags" access="public" returntype="query" output="false">
+	<cffunction name="getTags" access="public" returntype="query" output="false">
 		<cfargument name="filter" type="struct" default="#{}#" />
 		
 		<cfset var results = '' />
@@ -79,7 +79,7 @@
 					isPluginOnly = arguments.tag.getIsPluginOnly()
 				} />
 			
-			<cfset results = readTags() />
+			<cfset results = getTags() />
 			
 			<cfif results.recordCount>
 				<!--- If it already exists update the object --->
