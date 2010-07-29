@@ -2,7 +2,6 @@
 	"applicationSingletons": {
 	},
 	"applicationTransients": {
-		"modTagForTagger": "plugins.tagger.inc.model.modTag"
 	},
 	"i18n": {
 		"locales": [
