@@ -36,7 +36,7 @@
 			) />
 		
 		<!--- Set the bundle information for translation --->
-		<cfset setI18NBundle('plugins/tagger/i18n/inc/model', 'modTag') />
+		<cfset addBundle('plugins/tagger/i18n/inc/model', 'modTag') />
 		
 		<cfreturn this />
 	</cffunction>
