@@ -10,6 +10,7 @@
 		]
 	},
 	"key": "tagger",
+	"plugin": "Tagger",
 	"prerequisites": {
 		"algid": "0.1.1"
 	},
