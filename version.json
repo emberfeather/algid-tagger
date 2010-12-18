@@ -1,1 +1,8 @@
-0.1.000
+{
+	"archive": "http://github.com/emberfeather/algid-tagger/tarball/0.1.1",
+	"key": "tagger",
+	"releaseNotes": "http://github.com/emberfeather/algid-tagger/wiki/Release-Notes",
+	"title": "Tagger",
+	"URL": "http://github.com/emberfeather/algid-tagger",
+	"version": "0.1.1"
+}

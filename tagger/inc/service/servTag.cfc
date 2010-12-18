@@ -2,12 +2,9 @@
 	<cffunction name="getTag" access="public" returntype="component" output="false">
 		<cfargument name="tagID" type="string" required="true" />
 		
-		<cfset var i18n = '' />
-		<cfset var objectSerial = '' />
+		<cfset var modelSerial = '' />
 		<cfset var results = '' />
 		<cfset var tag = '' />
-		
-		<cfset i18n = variables.transport.theApplication.managers.singleton.getI18N() />
 		
 		<cfquery name="results" datasource="#variables.datasource.name#">
 			SELECT "tagID", tag, "createdOn", "isPluginOnly"
@@ -15,12 +12,12 @@
 			WHERE "tagID" = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.tagID#" null="#arguments.tagID eq ''#" />::uuid
 		</cfquery>
 		
-		<cfset tag = variables.transport.theApplication.factories.transient.getModTagForTagger(i18n, variables.transport.theSession.managers.singleton.getSession().getLocale()) />
+		<cfset tag = getModel('tagger', 'tag') />
 		
 		<cfif results.recordCount>
-			<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />
+			<cfset modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport) />
 			
-			<cfset objectSerial.deserialize(results, tag) />
+			<cfset modelSerial.deserialize(results, tag) />
 		</cfif>
 		
 		<cfreturn tag />
@@ -60,7 +57,7 @@
 		
 		<cfset var eventLog = '' />
 		<cfset var filter = '' />
-		<cfset var objectSerial = '' />
+		<cfset var modelSerial = '' />
 		<cfset var observer = '' />
 		<cfset var results = '' />
 		
@@ -83,9 +80,9 @@
 			
 			<cfif results.recordCount>
 				<!--- If it already exists update the object --->
-				<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />
+				<cfset modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport) />
 				
-				<cfset objectSerial.deserialize(results, arguments.tag) />
+				<cfset modelSerial.deserialize(results, arguments.tag) />
 				
 				<!--- Skip the after save event --->
 				<cfreturn />

@@ -2,7 +2,6 @@
 	"applicationSingletons": {
 	},
 	"applicationTransients": {
-		"modTagForTagger": "plugins.tagger.inc.model.modTag"
 	},
 	"i18n": {
 		"locales": [
@@ -11,6 +10,7 @@
 		]
 	},
 	"key": "tagger",
+	"plugin": "Tagger",
 	"prerequisites": {
 		"algid": "0.1.1"
 	},
