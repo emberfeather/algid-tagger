@@ -6,28 +6,28 @@
 		<cfset super.init(arguments.i18n, arguments.locale) />
 		
 		<!--- Tag ID --->
-		<cfset addAttribute(
+		<cfset add__attribute(
 				attribute = 'tagID',
 				validation = {
 				}
 			) />
 		
 		<!--- createdOn --->
-		<cfset addAttribute(
+		<cfset add__attribute(
 				attribute = 'createdOn',
 				validation = {
 				}
 			) />
 		
 		<!--- isPluginOnly --->
-		<cfset addAttribute(
+		<cfset add__attribute(
 				attribute = 'isPluginOnly',
 				validation = {
 				}
 			) />
 		
 		<!--- Tag --->
-		<cfset addAttribute(
+		<cfset add__attribute(
 				attribute = 'tag',
 				validation = {
 					minLength = 1,
@@ -36,7 +36,7 @@
 			) />
 		
 		<!--- Set the bundle information for translation --->
-		<cfset addBundle('plugins/tagger/i18n/inc/model', 'modTag') />
+		<cfset add__bundle('plugins/tagger/i18n/inc/model', 'modTag') />
 		
 		<cfreturn this />
 	</cffunction>

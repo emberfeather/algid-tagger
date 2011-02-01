@@ -12,7 +12,7 @@
 	"key": "tagger",
 	"plugin": "Tagger",
 	"prerequisites": {
-		"algid": "0.1.1"
+		"algid": "0.1.3"
 	},
 	"requestSingletons": {
 	},
@@ -22,5 +22,5 @@
 	},
 	"sessionTransients": {
 	},
-	"version": "0.1.1"
+	"version": "0.1.2"
 }
