@@ -52,7 +52,6 @@
 	</cffunction>
 	
 	<cffunction name="setTag" access="public" returntype="void" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="tag" type="component" required="true" />
 		
 		<cfset var eventLog = '' />
@@ -67,7 +66,7 @@
 		<!--- TODO Check Permissions --->
 		
 		<!--- Before Save Event --->
-		<cfset observer.beforeSave(variables.transport, arguments.currUser, arguments.tag) />
+		<cfset observer.beforeSave(variables.transport, arguments.tag) />
 		
 		<cfif arguments.tag.getTagID() eq ''>
 			<!--- Check if it already exists --->
@@ -108,14 +107,14 @@
 				</cftransaction>
 				
 				<!--- After Create Event --->
-				<cfset observer.afterCreate(variables.transport, arguments.currUser, arguments.tag) />
+				<cfset observer.afterCreate(variables.transport, arguments.tag) />
 			</cfif>
 		<cfelse>
 			<!--- After Update Event --->
-			<cfset observer.afterCreate(variables.transport, arguments.currUser, arguments.tag) />
+			<cfset observer.afterCreate(variables.transport, arguments.tag) />
 		</cfif>
 		
 		<!--- After Save Event --->
-		<cfset observer.afterSave(variables.transport, arguments.currUser, arguments.tag) />
+		<cfset observer.afterSave(variables.transport, arguments.tag) />
 	</cffunction>
 </cfcomponent>
