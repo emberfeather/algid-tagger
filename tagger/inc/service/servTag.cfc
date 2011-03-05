@@ -63,7 +63,7 @@
 		<!--- Get the event observer --->
 		<cfset observer = getPluginObserver('tagger', 'tag') />
 		
-		<!--- TODO Check Permissions --->
+		<cfset validate__model(arguments.tag) />
 		
 		<!--- Before Save Event --->
 		<cfset observer.beforeSave(variables.transport, arguments.tag) />
