@@ -63,6 +63,7 @@
 		<!--- Get the event observer --->
 		<cfset observer = getPluginObserver('tagger', 'tag') />
 		
+		<cfset scrub__model(arguments.tag) />
 		<cfset validate__model(arguments.tag) />
 		
 		<!--- Before Save Event --->
