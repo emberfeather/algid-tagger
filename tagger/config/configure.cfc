@@ -18,6 +18,20 @@
 				</cfdefaultcase>
 			</cfswitch>
 		</cfif>
+		
+		<!--- => 0.1.3 --->
+		<cfif versions.compareVersions(arguments.installedVersion, '0.1.3') lt 0>
+			<!--- Setup the Database --->
+			<cfswitch expression="#variables.datasource.type#">
+				<cfcase value="PostgreSQL">
+					<cfset postgreSQL0_1_3() />
+				</cfcase>
+				<cfdefaultcase>
+					<!--- TODO Remove this thow when a later version supports more database types  --->
+					<cfthrow message="Database Type Not Supported" detail="The #variables.datasource.type# database type is not currently supported" />
+				</cfdefaultcase>
+			</cfswitch>
+		</cfif>
 	</cffunction>
 	
 	<!---
@@ -63,6 +77,19 @@
 		
 		<cfquery datasource="#variables.datasource.name#">
 			COMMENT ON TABLE "#variables.datasource.prefix#tagger".tag IS 'Tag information.';
+		</cfquery>
+	</cffunction>
+	
+	<!---
+		Configures the database for v0.1.3
+	--->
+	<cffunction name="postgreSQL0_1_3" access="public" returntype="void" output="false">
+		<!---
+			Timestamps
+		--->
+		
+		<cfquery datasource="#variables.datasource.name#">
+			ALTER TABLE "#variables.datasource.prefix#tagger"."tag" ALTER "createdOn" TYPE timestamp with time zone;
 		</cfquery>
 	</cffunction>
 </cfcomponent>
